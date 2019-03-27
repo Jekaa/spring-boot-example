@@ -12,22 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("message")
+@RequestMapping("members")
 public class MemberController {
 
     private List<MembersGroup> membersGroups = new ArrayList<MembersGroup>() {{
-        add(new MembersGroup("Group 1", new ArrayList<Member>() {{
+        add(new MembersGroup("group_1", new ArrayList<Member>() {{
             add(new Member("Иван", 30));
             add(new Member("Пётр", 55));
             add(new Member("Екатерина", 20));
             add(new Member("Сергей", 70));
         }}));
-        add(new MembersGroup("Group 2", new ArrayList<Member>() {{
+        add(new MembersGroup("group_2", new ArrayList<Member>() {{
             add(new Member("Виктор", 33));
             add(new Member("Илья", 50));
             add(new Member("Елизавета", 41));
         }}));
-        add(new MembersGroup("Group 3", new ArrayList<Member>() {{
+        add(new MembersGroup("group_3", new ArrayList<Member>() {{
             add(new Member("Афанасий", 29));
             add(new Member("Мария", 50));
             add(new Member("Елена", 25));
@@ -35,8 +35,9 @@ public class MemberController {
             add(new Member("Николай", 51));
             add(new Member("Екатерина", 29));
         }}));
-        add(new MembersGroup("Group 4", new ArrayList<Member>() {{
+        add(new MembersGroup("group_4", new ArrayList<Member>() {{
             add(new Member("Денис", 99));
+            add(new Member("Кирилл", 81));
         }}));
     }};
 
@@ -45,14 +46,14 @@ public class MemberController {
         return membersGroups;
     }
 
-    @GetMapping("{id}")
-    public MembersGroup getOne(@PathVariable String name) {
-        return getMembersGroup(name);
+    @GetMapping("{groupName}")
+    public MembersGroup getOne(@PathVariable String groupName) {
+        return getMembersGroup(groupName);
     }
 
-    private MembersGroup getMembersGroup(@PathVariable String name) {
+    private MembersGroup getMembersGroup(@PathVariable String groupName) {
         return membersGroups.stream()
-                .filter(m -> m.getGroupName().equals(name))
+                .filter(m -> m.getGroupName().equals(groupName))
                 .findFirst()
                 .orElseThrow(NotFoundException::new);
     }

@@ -18,7 +18,7 @@ public class Finder {
                     .filter(
                             group -> group.getMembers()
                                     .stream()
-                                    .anyMatch(member -> member.getAge() > 50))
+                                    .anyMatch(member -> member.getAge() > 100))
                     .map(MembersGroup::getGroupName)
                     .collect(Collectors.toSet());
         }

@@ -3,6 +3,7 @@ package com.example.springbootexample.controller;
 import com.example.springbootexample.exceptions.NotFoundException;
 import com.example.springbootexample.model.Member;
 import com.example.springbootexample.model.MembersGroup;
+import com.example.springbootexample.service.Finder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("members")
@@ -56,5 +58,11 @@ public class MemberController {
                 .filter(m -> m.getGroupName().equals(groupName))
                 .findFirst()
                 .orElseThrow(NotFoundException::new);
+    }
+
+    @GetMapping("youngerThan50")
+    private Set<String> youngerThan50() {
+        Finder.FinderOldMan finderOldMan = new Finder.FinderOldMan();
+        return finderOldMan.findOldMembers(membersGroups);
     }
 }

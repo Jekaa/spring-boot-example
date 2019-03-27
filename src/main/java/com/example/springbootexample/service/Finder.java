@@ -6,6 +6,7 @@ import com.example.springbootexample.model.MembersGroup;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Finder {
     public static interface OldMemberFinder {
@@ -14,16 +15,16 @@ public class Finder {
 
     public static class FinderOldMan implements OldMemberFinder {
         public Set<String> findOldMembers(List<MembersGroup> groups) {
-            Set<String> groupsNames = new HashSet<>();
-            for (MembersGroup membersGroup : groups) {
-                for (Member member : membersGroup.getMembers()) {
-                    if (member.getAge() > 50) {
-                        String name = member.getName();
-                        groupsNames.add(name);
-                    }
-                }
-            }
-            return groupsNames;
+            return groups
+                    .stream()
+                    .filter(
+                            group -> group.getMembers()
+                                    .stream()
+                                    .filter(member -> member.getAge() > 50)
+                                    .findFirst()
+                                    .isPresent())
+                    .map(group -> group.getGroupName())
+                    .collect(Collectors.toSet());
         }
     }
 }

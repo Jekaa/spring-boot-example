@@ -17,7 +17,7 @@ public class AgeFinderImpl implements AgeFinder {
                 .filter(
                         group -> group.getMembers()
                                 .stream()
-                                .anyMatch(member -> member.getAge() > 50))
+                                .anyMatch(member -> member.getAge() > age))
                 .map(MembersGroup::getGroupName)
                 .collect(Collectors.toSet());
     }

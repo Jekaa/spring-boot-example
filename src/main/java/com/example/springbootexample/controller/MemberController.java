@@ -64,8 +64,8 @@ public class MemberController {
                 .orElseThrow(NotFoundException::new);
     }
 
-    @GetMapping("youngerThan50")
-    private Set<String> youngerThan50() {
-        return ageFinder.find(membersGroups, 50);
+    @GetMapping("youngerThan/{age}")
+    private Set<String> youngerThan(@PathVariable int age) {
+        return ageFinder.find(membersGroups, age);
     }
 }

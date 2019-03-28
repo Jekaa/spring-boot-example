@@ -31,7 +31,7 @@ fetch('/members', {
     body: 'group_4'
 }).then(result => console.log(result))
 
-// DELETE group by name
+// DELETE member by name
 fetch('/members/group_3', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/text' },

@@ -1,14 +1,12 @@
 package com.example.springbootexample.controller;
 
+import com.example.springbootexample.exceptions.DuplicateGroupException;
 import com.example.springbootexample.exceptions.NotFoundException;
 import com.example.springbootexample.model.Member;
 import com.example.springbootexample.model.MembersGroup;
 import com.example.springbootexample.service.AgeFinder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +51,7 @@ public class MemberController {
     }
 
     @GetMapping("{groupName}")
-    public MembersGroup getOne(@PathVariable String groupName) {
+    public MembersGroup getGroupByName(@PathVariable String groupName) {
         return getMembersGroup(groupName);
     }
 
@@ -67,5 +65,29 @@ public class MemberController {
     @GetMapping("youngerThan/{age}")
     private Set<String> youngerThan(@PathVariable int age) {
         return ageFinder.find(membersGroups, age);
+    }
+
+    @PostMapping
+    public MembersGroup createGroup(@RequestBody MembersGroup newMembersGroup) {
+        if (membersGroups.stream()
+                .anyMatch(group -> group.getGroupName().equals(newMembersGroup.getGroupName()))) {
+            throw new DuplicateGroupException();
+        } else {
+            membersGroups.add(newMembersGroup);
+            return newMembersGroup;
+        }
+    }
+
+    @PutMapping("{groupName}")
+    public MembersGroup addMember(@PathVariable String groupName, @RequestBody Member member) {
+        MembersGroup membersGroup = getMembersGroup(groupName);
+        membersGroup.getMembers().add(member);
+        return membersGroup;
+    }
+
+    @DeleteMapping("{groupName}")
+    public void deleteGroup(@PathVariable String groupName) {
+        MembersGroup removeMembersGroup = getMembersGroup(groupName);
+        membersGroups.remove(removeMembersGroup);
     }
 }

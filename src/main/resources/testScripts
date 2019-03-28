@@ -1,0 +1,28 @@
+// GET all
+fetch('/members/').then(response => response.json().then(console.log))
+
+// GET one
+fetch('/members/group_1').then(response => response.json().then(console.log))
+
+// POST add new one empty group
+fetch(
+  '/members',
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ groupName: 'group_5', members: [] })
+  }
+).then(result => result.json().then(console.log))
+
+// PUT add new member in group
+fetch(
+  '/members/group_1',
+  {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'Алиса', age: 12 })
+  }
+).then(result => result.json().then(console.log));
+
+// DELETE group by name
+fetch('/members/group_4', { method: 'DELETE' }).then(result => console.log(result))

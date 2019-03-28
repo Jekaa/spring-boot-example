@@ -25,4 +25,15 @@ fetch(
 ).then(result => result.json().then(console.log));
 
 // DELETE group by name
-fetch('/members/group_4', { method: 'DELETE' }).then(result => console.log(result))
+fetch('/members', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/text' },
+    body: 'group_4'
+}).then(result => console.log(result))
+
+// DELETE group by name
+fetch('/members/group_3', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/text' },
+    body: 'Николай'
+}).then(result => console.log(result))

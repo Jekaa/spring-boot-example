@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("members")
@@ -92,9 +93,20 @@ public class MemberController {
         return membersGroup;
     }
 
-    @DeleteMapping("{groupName}")
-    public void deleteGroup(@PathVariable String groupName) {
+    @DeleteMapping
+    public void deleteGroup(@RequestBody String groupName) {
         MembersGroup removeMembersGroup = getMembersGroup(groupName);
         membersGroups.remove(removeMembersGroup);
+    }
+
+    @DeleteMapping("{groupName}")
+    public void deleteMembersByName(@PathVariable String groupName, @RequestBody String memberName) {
+        MembersGroup membersGroup = getMembersGroup(groupName);
+        List<Member> removeMembers =
+                membersGroup.getMembers()
+                        .stream()
+                        .filter(member -> memberName.equals(member.getName()))
+                        .collect(Collectors.toList());
+        membersGroup.getMembers().removeAll(removeMembers);
     }
 }

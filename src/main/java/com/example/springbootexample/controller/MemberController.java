@@ -4,7 +4,7 @@ import com.example.springbootexample.exceptions.DuplicateGroupException;
 import com.example.springbootexample.exceptions.NotFoundException;
 import com.example.springbootexample.model.Member;
 import com.example.springbootexample.model.MembersGroup;
-import com.example.springbootexample.service.AgeFinder;
+import com.example.springbootexample.service.AgeFinderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class MemberController {
 
     @Autowired
-    AgeFinder ageFinder;
+    AgeFinderService ageFinder;
 
     private List<MembersGroup> membersGroups = new ArrayList<MembersGroup>() {{
         add(new MembersGroup("group_1", new ArrayList<Member>() {{

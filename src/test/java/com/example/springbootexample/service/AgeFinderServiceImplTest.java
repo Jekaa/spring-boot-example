@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-public class AgeFinderImplTest {
+public class AgeFinderServiceImplTest {
 
-    AgeFinderImpl ageFinder = new AgeFinderImpl();
+    AgeFinderServiceImpl ageFinderService = new AgeFinderServiceImpl();
     List<MembersGroup> membersGroups = new ArrayList<>();
 
     @Before
@@ -41,14 +41,14 @@ public class AgeFinderImplTest {
 
     @Test
     public void findOne() {
-        Set<String> resultSet = ageFinder.find(membersGroups, 50);
+        Set<String> resultSet = ageFinderService.find(membersGroups, 50);
         Assert.assertEquals(1, resultSet.size());
         Assert.assertEquals("groupName", resultSet.stream().findFirst().get());
     }
 
     @Test
     public void notFound() {
-        Set<String> resultSet = ageFinder.find(membersGroups, 77);
+        Set<String> resultSet = ageFinderService.find(membersGroups, 77);
         Assert.assertEquals(0, resultSet.size());
     }
 }

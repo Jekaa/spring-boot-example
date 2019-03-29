@@ -2,10 +2,12 @@ package com.example.springbootexample;
 
 import com.example.springbootexample.controller.MemberController;
 import com.example.springbootexample.model.MembersGroup;
+import com.example.springbootexample.service.AgeFinderService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -33,6 +36,17 @@ public class SpringBootExampleApplicationTests {
     @Autowired
     private MemberController memberController;
 
+    @Autowired
+    private AgeFinderService ageFinderService;
+
+    List<MembersGroup> membersGroups;
+
+    @Before
+    public void init() {
+        membersGroups = new ArrayList<>();
+        membersGroups.addAll(memberController.getMembersGroups());
+    }
+
     @Test
     public void contextLoads() throws Exception {
         Assertions.assertThat(memberController).isNotNull();
@@ -46,8 +60,6 @@ public class SpringBootExampleApplicationTests {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
         Gson gson = new GsonBuilder().serializeNulls().create();
-        List<MembersGroup> membersGroups = new ArrayList<>();
-        membersGroups.addAll(memberController.getMembersGroups());
         Assert.assertEquals(gson.toJson(membersGroups), content);
     }
 
@@ -58,6 +70,8 @@ public class SpringBootExampleApplicationTests {
                 .andExpect(status().isOk())
                 .andReturn();
         String content = result.getResponse().getContentAsString();
-        Assert.assertEquals("[\"group_4\",\"group_1\",\"group_3\"]", content);
+        Set<String> serviceResult = ageFinderService.find(membersGroups, 50);
+        Gson gson = new GsonBuilder().serializeNulls().create();
+        Assert.assertEquals(gson.toJson(serviceResult), content);
     }
 }

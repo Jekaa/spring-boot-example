@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class AgeFinderImpl implements AgeFinder {
+public class AgeFinderServiceImpl implements AgeFinderService {
 
     @Override
     public Set<String> find(List<MembersGroup> groups, int age) {

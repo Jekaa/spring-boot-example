@@ -1,5 +1,8 @@
 package com.example.springbootexample.model;
 
+/**
+ * Участник
+ */
 public class Member {
     private final String name;
     private final Integer age;

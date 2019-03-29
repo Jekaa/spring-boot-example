@@ -2,6 +2,9 @@ package com.example.springbootexample.model;
 
 import java.util.List;
 
+/**
+ * Группа участников
+ */
 public class MembersGroup {
     private final String groupName;
     private final List<Member> members;

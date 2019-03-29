@@ -1,5 +1,5 @@
 // GET all
-fetch('/members/').then(response => response.json().then(console.log))
+fetch('/members').then(response => response.json().then(console.log))
 
 // GET one
 fetch('/members/group_1').then(response => response.json().then(console.log))

@@ -53,6 +53,10 @@ public class MemberController {
         }}));
     }};
 
+    public List<MembersGroup> getMembersGroups() {
+        return membersGroups;
+    }
+
     @GetMapping
     public List<MembersGroup> list() {
         return membersGroups;
